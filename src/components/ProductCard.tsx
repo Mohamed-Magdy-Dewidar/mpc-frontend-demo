@@ -5,6 +5,18 @@ interface ProductCardProps {
   product: Product;
 }
 
+// 👇 HELPER FUNCTION: Fixes the Mixed Content Error
+const getSecureImageUrl = (url: string) => {
+  if (!url) return "https://placehold.co/400x400?text=No+Image"; // Better placeholder
+
+  // If the URL is raw http from EC2, route it through our secure Vercel proxy (/api)
+  if (url.includes("http://3.124.216.226:3000")) {
+    return url.replace("http://3.124.216.226:3000", "/api");
+  }
+  
+  return url;
+};
+
 export const ProductCard = ({ product }: ProductCardProps) => {
   // State for the selected variant
   const [selectedVariant, setSelectedVariant] = useState<string>(
@@ -20,9 +32,14 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       {/* Image Container */}
       <div className="relative h-64 overflow-hidden bg-gray-100">
         <img
-          src={product.imageUrl}
+          // 👇 UPDATED: Uses the secure helper function
+          src={getSecureImageUrl(product.imageUrl)}
           alt={product.name}
           className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+          // Add error handling to fall back to placeholder if image fails
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = "https://placehold.co/400x400?text=Error";
+          }}
         />
         {!product.inStock && (
           <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
