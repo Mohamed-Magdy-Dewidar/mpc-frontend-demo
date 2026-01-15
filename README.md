@@ -1,0 +1,3 @@
+## 🎨 Layout & Responsiveness
+
+I utilized a mobile-first Tailwind CSS grid system that scales dynamically from a single column on handheld devices to a four-column masonry layout on larger screens (`grid-cols-1` to `xl:grid-cols-4`). To ensure a consistent user experience across viewports, the product cards use Flexbox for uniform vertical alignment and implement `object-cover` on images to prevent distortion at any screen width.
