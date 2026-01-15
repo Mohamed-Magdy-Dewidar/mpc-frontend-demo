@@ -4,30 +4,6 @@ import { type CreateProductForm , type ProductResponse } from "../types";
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 
-// in case of fetch failure, return mock data
-const MOCK_PRODUCTS: ProductResponse[] = [
-  {
-    id: "1",
-    name: "Classic White T-Shirt",
-    price: 19.99,
-    category: "Apparel",
-    imageUrl: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80",
-    inStock: true,
-    variants: ["S", "M", "L"],
-    createdAt: new Date(),
-  },
-  {
-    id: "2",
-    name: "Running Shoes",
-    price: 129.99,
-    category: "Footwear",
-    imageUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80",
-    inStock: false,
-    variants: ["8", "9", "10"],
-    createdAt: new Date(),
-  }
-];
-
 export const fetchProducts = async (category?: string): Promise<ProductResponse[]> => {
   try {
     // Construct URL: if category is provided and not "All", add query param
